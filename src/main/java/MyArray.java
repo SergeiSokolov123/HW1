@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MyArray<E> extends ArrayList<E> {
+public class MyArray<E> implements MyArrayList<E> {
     private static final int INITIAL_CAPACITY = 10;
     private int size = 0;
     private Object elements[];
@@ -12,21 +11,20 @@ public class MyArray<E> extends ArrayList<E> {
     }
 
     @Override
-    public boolean add(E e) {
+    public void add(E e) {
         if (size == elements.length) {
             grow();
         }
         elements[size++] = e;
-        return true;
     }
 
     @Override
-    public E get(int index) {
+    public Object get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size "
                     + index);
         }
-        return (E) elements[index];
+        return elements[index];
     }
 
     @Override
@@ -46,7 +44,13 @@ public class MyArray<E> extends ArrayList<E> {
 
     @Override
     public void clear() {
-        Arrays.fill(elements, null);
+        size = 10;
+        elements = new Object[INITIAL_CAPACITY];
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     private void grow() {
